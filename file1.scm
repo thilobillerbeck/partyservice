@@ -1,4 +1,5 @@
 ;; --- IMPORTS ---
+(require-extension http-client)
 (require-extension html-parser)
 (require-extension sxpath)
 (require-extension sxpath-lolevel)
@@ -89,9 +90,9 @@
 ;; gsal -> list
 ;; get webpage data and return it's DOM
 (define (gsal)
-    (call-with-input-file 
-        "site.html"
-         html->sxml
+    (call-with-input-string 
+        (with-input-from-request "https://www.partyamt.de" #f read-string) 
+        html->sxml
     )
 )
 
